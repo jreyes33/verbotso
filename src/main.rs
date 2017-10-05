@@ -9,7 +9,11 @@ fn main() {
 
 pub fn longest_synonym(term: &str) -> Option<String> {
     let synonyms = find_synonyms(term);
-    if synonyms.is_empty() { None } else { Some(synonyms[0].clone()) }
+    if synonyms.is_empty() {
+        None
+    } else {
+        Some(synonyms[0].clone())
+    }
 }
 
 fn find_synonyms(term: &str) -> Vec<String> {
@@ -24,10 +28,13 @@ fn find_synonyms(term: &str) -> Vec<String> {
 }
 
 fn read_synonyms(contents: &str, position: usize) -> Vec<String> {
-    let mut synonyms: Vec<_> = contents[position + 1 ..].lines().skip(1)
+    let mut synonyms: Vec<_> = contents[position + 1..]
+        .lines()
+        .skip(1)
         .take_while(|line| &line[..1] == "-" || &line[..1] == "(")
         .flat_map(|line| line.split("|").skip(1))
-        .map(String::from).collect();
+        .map(String::from)
+        .collect();
     synonyms.sort_by_key(|word| Reverse(word.len()));
     synonyms.dedup();
     synonyms
@@ -46,7 +53,8 @@ mod tests {
 
     #[test]
     fn it_reads_synonyms_in_multiple_lines() {
-        assert_eq!(vec!["abundante", "copioso", "suelto"], find_synonyms("granel"));
+        let synonyms = find_synonyms("granel");
+        assert_eq!(vec!["abundante", "copioso", "suelto"], synonyms);
     }
 
     #[test]
