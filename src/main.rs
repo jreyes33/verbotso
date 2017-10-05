@@ -4,6 +4,12 @@ use std::io::Read;
 
 fn main() {
     println!("{:?}", find_synonyms("mesa"));
+    println!("{:?}", longest_synonym("mesa"));
+}
+
+pub fn longest_synonym(term: &str) -> Option<String> {
+    let synonyms = find_synonyms(term);
+    if synonyms.is_empty() { None } else { Some(synonyms[0].clone()) }
 }
 
 fn find_synonyms(term: &str) -> Vec<String> {
@@ -46,5 +52,16 @@ mod tests {
     #[test]
     fn it_sorts_by_longest_first_and_removes_duplicates() {
         assert_eq!(vec!["arcilla", "marga", "gres"], find_synonyms("greda"));
+    }
+
+    #[test]
+    fn it_gets_the_longest_synonym() {
+        assert_eq!(Some("abundante".to_string()), longest_synonym("granel"));
+        assert_eq!(Some("arcilla".to_string()), longest_synonym("greda"));
+    }
+
+    #[test]
+    fn it_returns_none_if_no_synonym_was_found() {
+        assert_eq!(None, longest_synonym("noexiste"));
     }
 }
