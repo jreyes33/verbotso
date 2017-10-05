@@ -1,0 +1,6 @@
+[package]
+name = "verbotso"
+version = "0.1.0"
+authors = ["Jonathan Reyes <j@jreyes.org>"]
+
+[dependencies]
